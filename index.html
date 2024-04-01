@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scratch Card132</title>
-    <link rel="stylesheet" href="style.css" />
-    <script
-      src="https://code.jquery.com/jquery-2.2.4.min.js"
-      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-      crossorigin="anonymous"
-    ></script> 
-    <script src="./app.js" defer></script>
-    <script src="./wScratchpad.min.js"></script>
-  </head>
-  <body>
-    <div id="container">
-      <div id="card"></div>
-    </div>
-    
-  </body>
-</html>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scratch Card132</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <!-- <script src="./app.js" defer></script> -->
+  <script src="./wScratchpad.min.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="card"></div>
+  </div>
+
+</body>
+<script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js"></script>
+<script type="module" src="./config/db.js"></script>
+<script type="module" src="./app.js"></script>
+</html>
