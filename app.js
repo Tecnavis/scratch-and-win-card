@@ -8,6 +8,7 @@ import {
   serverTimestamp,
   query,
   orderBy,
+  updateDoc,
   where
 } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.8/firebase-storage.js';
@@ -48,10 +49,12 @@ async function retrieveDataAndInitializeScratchCard() {
       cardsData.push(data);
     });
 
+    // Sort cardsData array based on count in descending order
+    cardsData.sort((a, b) => b.count - a.count);
+
     // Check if there are available cards
     if (cardsData.length > 0) {
-      const num = Math.floor(Math.random() * cardsData.length); // Generate random index
-      const card = cardsData[num]; // Get random scratch card data
+      const card = cardsData[0]; // Select the first card (highest count)
 
       // Check if counts are available
       if (card.count > 0) {
@@ -68,9 +71,10 @@ async function retrieveDataAndInitializeScratchCard() {
   }
 }
 
+
 // Function to initialize scratch card with data
 function initializeScratchCard(cardData) {
-  console.log(cardData.photoUrl);
+  // console.log(cardData.photoUrl);
   $("#card").wScratchPad({
     size: 100, // The size of the brush/scratch.
     bg: cardData.photoUrl, // Background image from Firebase data.
@@ -86,32 +90,30 @@ function initializeScratchCard(cardData) {
 }
 
 function updateCount(cardData) {
-  const uid = sessionStorage.getItem('uid');
+  const uid = 'NTqIUsvcrtSj3zO9zdY9X4vUELf2';
   const cardRef = collection(firestore, `users/${uid}/prizeList`);
 
   // Use where clause to target the specific document based on its ID
-  const querys = query(cardRef, where('id', '==', cardData.id));
+  const querys = query(cardRef, where('prizeID', '==', cardData.prizeID));
+  // console.log(cardData.prizeID);
 
-  try {
-    getDocs(querys)
-      .then((querySnapshot) => {
-        querySnapshot.forEach(async (doc) => {
-          console.log(doc.id);
-          await doc.ref.update({
-            count: cardData.count - 1 // Decrease count by 1
-          }).then(() => {
-            console.log("Count updated successfully.");
-          }).catch((error) => {
-            console.error("Error updating count: ", error);
-          });
+  getDocs(querys)
+    .then((querySnapshot) => {
+      querySnapshot.forEach(async (doc) => {
+        console.log(doc.id);
+        await updateDoc(doc.ref, {
+          count: cardData.count - 1 // Decrease count by 1
+        }).then(() => {
+          console.log("Count updated successfully.");
+        }).catch((error) => {
+          console.error("Error updating count: ", error);
         });
-      })
-      .catch((error) => {
-        console.error("Error updating count: ", error);
       });
-  } catch (error) {
-    console.error("Error fetching Doc:", error);
-  }
+    })
+    .catch((error) => {
+      console.error("Error updating count: ", error);
+    });
+
 }
 
 // Call the function to retrieve data from Firebase and initialize scratch card
