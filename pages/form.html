@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        /* Custom CSS for styling */
+        /* Add your custom styles here */
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .form-label {
+                font-size: 0.9rem;
+                /* Decrease font size for smaller screens */
+            }
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" style="max-width: 30%;">
+        <div class="form-group">
+            <label for="exampleInputName1">Name</label>
+            <input type="text" class="form-control" id="inputFirstName" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email Address</label>
+            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPhone1">Phone Number</label>
+            <input type="phone" class="form-control" id="inputPhoneNumber">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPlace1">Place</label>
+            <input type="text" class="form-control" id="inputPlace">
+        </div>
+        <button type="submit" class="btn" style="background-color: #b66dff; color: #fff;"
+            id="saveChangesBtn">Submit</button>
+    </div>
+
+</body>
+<script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js"></script>
+<script type="module" src="../config/db.js"></script>
+<script type="module" src="../js/form.js"></script>
+
+</html>
