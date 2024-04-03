@@ -10,6 +10,14 @@
     integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
   <!-- <script src="./app.js" defer></script> -->
   <script src="../wScratchpad.min.js"></script>
+  <style>
+    /* Extra small devices (phones, 600px and down) */
+    @media only screen and (max-width: 600px) {
+      .container div:first-child{
+        margin: 25px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -17,7 +25,9 @@
     <div id="card"></div>
     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 15px;">
       <h3 id="winID"></h3>
-      <button style="display: none; background-color: #b66dff; color: #fff; border: 0; padding: 10px; font-size: 18px; border-radius: 10px;" id="downloadBtn" class="btn">Download</button>
+      <button
+        style="display: none; background-color: #b66dff; color: #fff; border: 0; padding: 10px; font-size: 18px; border-radius: 10px;"
+        id="downloadButton" class="btn">Download</button>
     </div>
   </div>
 </body>
@@ -26,4 +36,5 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js"></script>
 <script type="module" src="../config/db.js"></script>
 <script type="module" src="../js/scratchCard.js"></script>
+
 </html>

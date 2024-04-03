@@ -11,6 +11,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-firestore.js";
 import { app } from '../config/db.js';
 
+let logoURL;
+
 document.addEventListener('DOMContentLoaded', function () {
     displayDataInTable()
 });
@@ -34,6 +36,7 @@ async function displayDataInTable() {
         querySnapshot.forEach((doc) => {
             const data = doc.data();
             // console.log(data);
+            logoURL = data.photoUrl;
 
             document.getElementById('displayImage').src = data.photoUrl
             document.getElementById('displayName').textContent = data.name
@@ -45,3 +48,5 @@ async function displayDataInTable() {
         console.error('Error displaying data in table:', error);
     }
 }
+
+export {logoURL}

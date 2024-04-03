@@ -12,9 +12,12 @@ import {
     where
 } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-firestore.js";
 import { app } from '../config/db.js';
+import { logoURL } from './index.js'
 
 const firestore = getFirestore(app);
 const timestamp = serverTimestamp()
+
+let winnerID, dateTime, prize;
 
 // var num = Math.floor(Math.random() * 4) + 1;
 
@@ -90,7 +93,7 @@ function initializeScratchCard(cardData) {
                 if (percent > 50) {
                     updateCount(cardData);
                 }
-            }, 500); // Adjust the delay as needed
+            }, 1000); // Adjust the delay as needed
         }
     });
 }
@@ -135,7 +138,19 @@ function updateCount(cardData) {
                         }).then(() => {
                             console.log("New field added successfully to the table document.");
                             document.getElementById('winID').textContent = winID;
-                            document.getElementById('downloadBtn').style.display = 'block';
+                            document.getElementById('downloadButton').style.display = 'block';
+
+                            const now = new Date();
+
+                            const dateString = now.toLocaleDateString(); // Get date string in locale-specific format
+                            const hours = formatTimePart(now.getHours());
+                            const minutes = formatTimePart(now.getMinutes());
+                            const seconds = formatTimePart(now.getSeconds());
+                            const timeString = hours + ':' + minutes + ':' + seconds;
+
+                            winnerID = winID;
+                            prize = cardData.prizeName;
+                            dateTime = dateString + '  ' + timeString;
                         }).catch((error) => {
                             console.error("Error adding new field to the table document: ", error);
                         });
@@ -171,3 +186,100 @@ function generateCustomId(num) {
 
     return customId;
 }
+
+// document.getElementById("downloadButton").addEventListener("click", function () {
+//     // Make a request to the server to get the data from the database
+//     // You can use AJAX or fetch API for this purpose
+
+//     // For the sake of simplicity, let's assume the data is hardcoded here
+//     const dataFromDatabase = "Your data from database";
+
+//     // Create a canvas element to draw the image and text
+//     const canvas = document.createElement('canvas');
+//     const ctx = canvas.getContext('2d');
+
+//     // Set canvas dimensions
+//     canvas.width = 2000; // Adjust as per your image dimensions
+//     canvas.height = 2000; // Adjust as per your image dimensions
+
+//     // Draw your image on canvas
+//     const img = new Image();
+//     img.onload = function () {
+//         ctx.drawImage(img, 0, 0);
+//         // Add text
+//         ctx.font = '50px Arial';
+//         ctx.fillStyle = 'black';
+//         ctx.fillText(prize, 700, 1300); // Adjust position as needed
+//         ctx.fillText(winnerID, 700, 1500);
+//         ctx.fillText(dateTime, 700, 1700);
+
+//         // Convert canvas to data URL
+//         const dataURL = canvas.toDataURL();
+
+//         // Create a link element
+//         const link = document.createElement('a');
+//         link.href = dataURL;
+//         link.download = 'image_with_data.png'; // Filename
+
+//         // Trigger click event on the link to download the image
+//         document.body.appendChild(link);
+//         link.click();
+//         document.body.removeChild(link);
+//     };
+//     img.src = '../untitled-1.jpg'; // Replace with your image path
+// });
+
+function formatTimePart(part) {
+    return part < 10 ? '0' + part : part;
+}
+
+document.getElementById("downloadButton").addEventListener("click", function () {
+    // Create a canvas element to draw the image, logo, and text
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas dimensions
+    canvas.width = 2000; // Adjust as per your image dimensions
+    canvas.height = 2000; // Adjust as per your image dimensions
+
+    // Load logo image
+    const logo = new Image();
+    logo.src = '../Images/Gpay_Card 1.jpg'; // Replace with your logo path 
+    logo.onload = function () {
+        // Draw logo
+        ctx.drawImage(logo, 100, 100, 5000, 5000); // Adjust position and size as needed
+
+        // Load your main image
+        const img = new Image();
+        img.src = '../congratulations.jpg'; // Replace with your image path 
+        img.onload = function () {
+            // Draw your main image on canvas
+            ctx.drawImage(img, 0, 0);
+
+            // Add text
+            ctx.font = '100px Arial';
+            ctx.fillStyle = 'black';
+            ctx.fillText(prize, 800, 1550); // Adjust position as needed
+            ctx.fillText(winnerID, 500, 1700);
+            ctx.fillText(dateTime, 600, 1850);
+
+            // Append canvas to document body
+            document.body.appendChild(canvas);
+
+            // Convert canvas to data URL
+            const dataURL = canvas.toDataURL("image/png");
+
+            // Create a link element
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'image_with_data_and_logo.png'; // Filename
+
+            // Trigger click event on the link to download the image
+            link.click();
+
+            // Remove canvas from document body
+            document.body.removeChild(canvas);
+        };
+    };
+});
+
