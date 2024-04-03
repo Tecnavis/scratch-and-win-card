@@ -19,15 +19,6 @@ const timestamp = serverTimestamp()
 
 let winnerID, dateTime, prize;
 
-// var num = Math.floor(Math.random() * 4) + 1;
-
-// $("#card").wScratchPad({
-//   size: 100, // The size of the brush/scratch.
-//   bg: `Images/Gpay_Card ${num}.jpg`, // Background (image path or hex color).
-//   fg: `Images/front.jpg`, // Foreground (image path or hex color).
-//   cursor: "pointer", // Set cursor.
-// });
-
 
 // Function to retrieve data from Firebase and initialize scratch card
 async function retrieveDataAndInitializeScratchCard() {
@@ -187,47 +178,6 @@ function generateCustomId(num) {
     return customId;
 }
 
-// document.getElementById("downloadButton").addEventListener("click", function () {
-//     // Make a request to the server to get the data from the database
-//     // You can use AJAX or fetch API for this purpose
-
-//     // For the sake of simplicity, let's assume the data is hardcoded here
-//     const dataFromDatabase = "Your data from database";
-
-//     // Create a canvas element to draw the image and text
-//     const canvas = document.createElement('canvas');
-//     const ctx = canvas.getContext('2d');
-
-//     // Set canvas dimensions
-//     canvas.width = 2000; // Adjust as per your image dimensions
-//     canvas.height = 2000; // Adjust as per your image dimensions
-
-//     // Draw your image on canvas
-//     const img = new Image();
-//     img.onload = function () {
-//         ctx.drawImage(img, 0, 0);
-//         // Add text
-//         ctx.font = '50px Arial';
-//         ctx.fillStyle = 'black';
-//         ctx.fillText(prize, 700, 1300); // Adjust position as needed
-//         ctx.fillText(winnerID, 700, 1500);
-//         ctx.fillText(dateTime, 700, 1700);
-
-//         // Convert canvas to data URL
-//         const dataURL = canvas.toDataURL();
-
-//         // Create a link element
-//         const link = document.createElement('a');
-//         link.href = dataURL;
-//         link.download = 'image_with_data.png'; // Filename
-
-//         // Trigger click event on the link to download the image
-//         document.body.appendChild(link);
-//         link.click();
-//         document.body.removeChild(link);
-//     };
-//     img.src = '../untitled-1.jpg'; // Replace with your image path
-// });
 
 function formatTimePart(part) {
     return part < 10 ? '0' + part : part;
@@ -243,9 +193,9 @@ document.getElementById("downloadButton").addEventListener("click", function () 
     canvas.height = 2000; // Adjust as per your image dimensions
 
     // Load logo image
-    const logo = new Image();
-    logo.src = '../Images/Gpay_Card 1.jpg'; // Replace with your logo path 
-    logo.onload = function () {
+    // const logo = new Image();
+    // logo.src = '../Images/Gpay_Card 1.jpg'; // Replace with your logo path 
+    // logo.onload = function () {
         // Draw logo
         ctx.drawImage(logo, 100, 100, 5000, 5000); // Adjust position and size as needed
 
@@ -280,6 +230,6 @@ document.getElementById("downloadButton").addEventListener("click", function () 
             // Remove canvas from document body
             document.body.removeChild(canvas);
         };
-    };
+    // };
 });
 
