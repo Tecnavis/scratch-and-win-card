@@ -110,6 +110,10 @@ function updateCount(cardData) {
                     // Get the phone number from localStorage
                     var number = localStorage.getItem('num');
 
+                    if (!number) {
+                        window.location.href = './form.html'
+                    }
+
                     const winID = generateCustomId(number);
 
                     // Reference to the "table" collection
@@ -125,11 +129,12 @@ function updateCount(cardData) {
                     tableQuerySnapshot.forEach(async (tableDoc) => {
                         await updateDoc(tableDoc.ref, {
                             // Add a new field to the document
-                            winID: winID // newValue is the value you want to assign to the new field
+                            winID: winID,
+                            prizeID: cardData.prizeID // newValue is the value you want to assign to the new field
                         }).then(() => {
                             console.log("New field added successfully to the table document.");
+                            document.getElementById('successMessage').style.display = 'block'
                             document.getElementById('winID').textContent = winID;
-                            document.getElementById('downloadButton').style.display = 'block';
 
                             const now = new Date();
 
@@ -142,6 +147,17 @@ function updateCount(cardData) {
                             winnerID = winID;
                             prize = cardData.prizeName;
                             dateTime = dateString + '  ' + timeString;
+
+                            // Auto Download Image
+                            autoDownload();
+
+                            const num = localStorage.getItem('num');
+                            if (num) {
+                                localStorage.removeItem('num');
+                                // Redirect to index page
+                                window.location.href = '../index.html'
+                            }
+
                         }).catch((error) => {
                             console.error("Error adding new field to the table document: ", error);
                         });
@@ -155,6 +171,7 @@ function updateCount(cardData) {
             console.error("Error updating count: ", error);
         });
 }
+
 
 
 // Call the function to retrieve data from Firebase and initialize scratch card
@@ -183,53 +200,47 @@ function formatTimePart(part) {
     return part < 10 ? '0' + part : part;
 }
 
-document.getElementById("downloadButton").addEventListener("click", function () {
+// Function to handle automatic download
+function autoDownload() {
     // Create a canvas element to draw the image, logo, and text
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
 
-    // Set canvas dimensions
+    // Set canvas dimensions based on your image size
     canvas.width = 2000; // Adjust as per your image dimensions
     canvas.height = 2000; // Adjust as per your image dimensions
 
-    // Load logo image
-    // const logo = new Image();
-    // logo.src = '../Images/Gpay_Card 1.jpg'; // Replace with your logo path 
-    // logo.onload = function () {
-        // Draw logo
-        // ctx.drawImage(logo, 100, 100, 5000, 5000); // Adjust position and size as needed
+    // Load your main image
+    const img = new Image();
+    img.src = '../congratulations.jpg'; // Replace with your image path 
+    img.onload = function () {
+        // Draw your main image on canvas
+        ctx.drawImage(img, 0, 0);
 
-        // Load your main image
-        const img = new Image();
-        img.src = '../congratulations.jpg'; // Replace with your image path 
-        img.onload = function () {
-            // Draw your main image on canvas
-            ctx.drawImage(img, 0, 0);
+        // Add text
+        ctx.font = '100px Arial';
+        ctx.fillStyle = 'black';
+        ctx.fillText(prize, 800, 1550); // Adjust position as needed
+        ctx.fillText(winnerID, 500, 1700);
+        ctx.fillText(dateTime, 600, 1850);
 
-            // Add text
-            ctx.font = '100px Arial';
-            ctx.fillStyle = 'black';
-            ctx.fillText(prize, 800, 1550); // Adjust position as needed
-            ctx.fillText(winnerID, 500, 1700);
-            ctx.fillText(dateTime, 600, 1850);
+        // Append canvas to document body
+        document.body.appendChild(canvas);
 
-            // Append canvas to document body
-            document.body.appendChild(canvas);
+        // Convert canvas to data URL
+        const dataURL = canvas.toDataURL("image/png");
 
-            // Convert canvas to data URL
-            const dataURL = canvas.toDataURL("image/png");
+        // Create a link element
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'prize-details.png'; // Filename
 
-            // Create a link element
-            const link = document.createElement('a');
-            link.href = dataURL;
-            link.download = 'image_with_data_and_logo.png'; // Filename
+        // Trigger click event on the link to download the image
+        link.click();
 
-            // Trigger click event on the link to download the image
-            link.click();
+        // Remove canvas from document body
+        document.body.removeChild(canvas);
+    };
+}
 
-            // Remove canvas from document body
-            document.body.removeChild(canvas);
-        };
-    // };
-});
 
