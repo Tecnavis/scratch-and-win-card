@@ -72,7 +72,7 @@ function initializeScratchCard(cardData) {
     $("#card").wScratchPad({
         size: 100,
         bg: cardData.photoUrl,
-        fg: "../Images/front.jpg",
+        fg: "../Images/8802794.png",
         cursor: "pointer",
         scratchMove: function (e, percent) {
             // Clear the previous timeout
@@ -197,7 +197,7 @@ document.getElementById("downloadButton").addEventListener("click", function () 
     // logo.src = '../Images/Gpay_Card 1.jpg'; // Replace with your logo path 
     // logo.onload = function () {
         // Draw logo
-        ctx.drawImage(logo, 100, 100, 5000, 5000); // Adjust position and size as needed
+        // ctx.drawImage(logo, 100, 100, 5000, 5000); // Adjust position and size as needed
 
         // Load your main image
         const img = new Image();
