@@ -150,14 +150,6 @@ function updateCount(cardData) {
 
                             // Auto Download Image
                             autoDownload();
-
-                            const num = localStorage.getItem('num');
-                            if (num) {
-                                localStorage.removeItem('num');
-                                // Redirect to index page
-                                window.location.href = '../index.html'
-                            }
-
                         }).catch((error) => {
                             console.error("Error adding new field to the table document: ", error);
                         });
@@ -240,6 +232,13 @@ function autoDownload() {
 
         // Remove canvas from document body
         document.body.removeChild(canvas);
+
+        const num = localStorage.getItem('num');
+        if (num) {
+            localStorage.removeItem('num');
+            // Redirect to index page
+            window.location.href = '../index.html'
+        }
     };
 }
 
